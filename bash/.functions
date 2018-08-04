@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# check file size
+function fs() {
+    du -sh ${1} | awk '{print $1}'
+}
+
+# check processes using a port
+function port() {
+    lsof -iTCP:$1 -sTCP:LISTEN
+}
+
+# credit: http://nparikh.org/notes/zshrc.txt
+# Usage: extract <file>
+# Description: extracts archived files / mounts disk images
+# Note: .dmg/hdiutil is Mac OS X-specific.
+extract () {
+    if [ -f $1 ]; then
+        case $1 in
+            *.tar.bz2)  tar -jxvf $1                        ;;
+            *.tar.gz)   tar -zxvf $1                        ;;
+            *.bz2)      bunzip2 $1                          ;;
+            *.dmg)      hdiutil mount $1                    ;;
+            *.gz)       gunzip $1                           ;;
+            *.tar)      tar -xvf $1                         ;;
+            *.tbz2)     tar -jxvf $1                        ;;
+            *.tgz)      tar -zxvf $1                        ;;
+            *.zip)      unzip $1                            ;;
+            *.ZIP)      unzip $1                            ;;
+            *.pax)      cat $1 | pax -r                     ;;
+            *.pax.Z)    uncompress $1 --stdout | pax -r     ;;
+            *.Z)        uncompress $1                       ;;
+            *)          echo "'$1' cannot be extracted/mounted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+tab-color() {
+    echo -ne "\033]6;1;bg;red;brightness;$1\a"
+    echo -ne "\033]6;1;bg;green;brightness;$2\a"
+    echo -ne "\033]6;1;bg;blue;brightness;$3\a"
+}
+tab-reset() {
+    echo -ne "\033]6;1;bg;*;default\a"
+}
+
+# Change the color of the tab when using SSH
+# reset the color after the connection closes
+color-ssh() {
+    if [[ -n "$ITERM_SESSION_ID" ]]; then
+        trap "tab-reset" INT EXIT
+        if [[ "$*" =~ "production|ec2-.*compute-1" ]]; then
+            tab-color 215 38 56
+        else
+            tab-color 255 64 61
+        fi
+    fi
+    ssh $*
+}
+title() {
+    echo -ne "\033]0;"$*"\007"
+}
+compdef _ssh color-ssh=ssh
+
+alias ssh=color-ssh
+
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# go to aliases
+alias dotfile='vim ~/.dotfiles/bash/.aliases'
+
+# make aliases sudo-able
+alias sudo="sudo "
+
+# directory navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+# some ls aliases
+alias la="ls -A"
+alias ll="ls -Al"
+
+# git shortcuts
+alias gs="git status"
+alias gt="git stash"
+alias gtp="git stash pop"
+alias ga="git add"
+alias gc="git commit"
+alias gb="git branch"
+alias gd="git diff"
+alias gk="git checkout"
+alias gp="git push"
+alias gf="git fetch --all"
+alias gr="git rebase"
+alias gm="git merge"
+alias gg="git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --remotes=* --branches"
+alias gcp="git cherry-pick"
+
+# process finding
+alias pg="pgrep -lf"
+
+# apache
+alias a_log="tail -f /var/log/apache2/error_log"
+alias a_loga="tail -f /var/log/apache2/access_log"
+alias a_con="sudo vim /etc/apache2/extra/httpd-vhosts.conf"
+alias a_clean="echo '' > /var/log/apache2/access_log & echo '' > /var/log/apache2/error_log"
+alias a_host="sudo vim /etc/apache2/extra/httpd-vhosts.conf"
+
+# deploy heroku
+alias sync_wb_db='function _run(){ echo "mysql --host=us-cdbr-iron-east-04.cleardb.net --user=b5b218e18a608c --password=fa1dbcb4 --reconnect heroku_5a1bdae9b2da7ae < $1"; };_run'
+
+# tools
+alias composer="php /usr/local/bin/composer.phar"
+alias phpdoc="php /usr/local/bin/phpdoc.phar"
+alias phpdebug="~/.composer/vendor/bin/dephpugger"
+
+# docker
+alias dk="docker"
+alias dkc="docker-compose"
+
+# unix shortcode
+alias rm="rm -i"
+alias rs="reset"
+
+# google translate
+alias tv="trans -t=vi"
+
+# virtual box manager
+alias vm="VBoxManage"
+
+# open sublime text
+alias subl="open -a Sublime\ Text"
+
+# open another skype
+alias skype2="open -na /Applications/Skype.app --args -DataPath /Users/$(whoami)/Library/Application\ Support/Skype2"
+
+# run medis
+alias medis="cd /Users/tuevo/Projects/tools/medis && npm run electron electron"
+alias devdoc="/Users/tuevo/Projects/tools/devdocs && rackup"
