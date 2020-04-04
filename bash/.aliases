@@ -33,26 +33,16 @@ alias gg="git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow
 alias gcp="git cherry-pick"
 
 # process finding
-alias pg="pgrep -lf"
-
-# apache
-alias a_log="tail -f /var/log/apache2/error_log"
-alias a_loga="tail -f /var/log/apache2/access_log"
-alias a_con="sudo vim /etc/apache2/extra/httpd-vhosts.conf"
-alias a_clean="echo '' > /var/log/apache2/access_log & echo '' > /var/log/apache2/error_log"
-alias a_host="sudo vim /etc/apache2/extra/httpd-vhosts.conf"
-
-# deploy heroku
-alias sync_wb_db='function _run(){ echo "mysql --host=us-cdbr-iron-east-04.cleardb.net --user=b5b218e18a608c --password=fa1dbcb4 --reconnect heroku_5a1bdae9b2da7ae < $1"; };_run'
+alias ff="pgrep -lf"
 
 # tools
 alias composer="php /usr/local/bin/composer.phar"
 alias phpdoc="php /usr/local/bin/phpdoc.phar"
 alias phpdebug="~/.composer/vendor/bin/dephpugger"
 
-# docker
-alias dk="docker"
-alias dkc="docker-compose"
+# k8s
+alias k=kubectl
+alias v="nvim ."
 
 # unix shortcode
 alias rm="rm -i"
@@ -60,6 +50,7 @@ alias rs="reset"
 
 # google translate
 alias tv="trans -t=vi"
+alias vt="trans -f=vi -t=en"
 
 # virtual box manager
 alias vm="VBoxManage"
@@ -67,9 +58,10 @@ alias vm="VBoxManage"
 # open sublime text
 alias subl="open -a Sublime\ Text"
 
-# open another skype
-alias skype2="open -na /Applications/Skype.app --args -DataPath /Users/$(whoami)/Library/Application\ Support/Skype2"
-
 # run medis
 alias medis="cd /Users/tuevo/Projects/tools/medis && npm run electron electron"
-alias devdoc="/Users/tuevo/Projects/tools/devdocs && rackup"
+alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
+
+# Kubectl
+alias ks='kubectl config set-context --current --namespace $1'
+alias kk='kubectl config use-context $1'

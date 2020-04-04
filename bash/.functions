@@ -67,3 +67,4 @@ compdef _ssh color-ssh=ssh
 alias ssh=color-ssh
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '<tab>' autosuggest-accept
