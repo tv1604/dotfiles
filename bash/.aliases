@@ -22,15 +22,14 @@ alias gt="git stash"
 alias gtp="git stash pop"
 alias ga="git add"
 alias gc="git commit"
-alias gb="git branch"
 alias gd="git diff"
 alias gk="git checkout"
 alias gp="git push"
 alias gf="git fetch --all"
 alias gr="git rebase"
-alias gm="git merge"
-alias gg="git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --remotes=* --branches"
-alias gcp="git cherry-pick"
+alias gh="git show HEAD"
+alias gg="git log --graph --pretty=format:'%C(red)%h%Creset - %<(50,trunc)%s%Creset%n%C(yellow)%D%Creset' --abbrev-commit --remotes=* --branches"
+# alias gg="git log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %<(50,trunc)%s %C(blue)%aE%Creset' --abbrev-commit --remotes=* --branches"
 
 # process finding
 alias ff="pgrep -lf"
@@ -41,27 +40,35 @@ alias phpdoc="php /usr/local/bin/phpdoc.phar"
 alias phpdebug="~/.composer/vendor/bin/dephpugger"
 
 # k8s
-alias k=kubectl
-alias v="nvim ."
+alias kk=kubectl
+alias kkk="k9s --headless"
+alias vim="nvim"
+alias v="nvim"
+alias vv="nvim ."
+alias d=docker
+alias is=istioctl
 
 # unix shortcode
 alias rm="rm -i"
 alias rs="reset"
+alias va='vault $1'
+alias ddu='du -sh -- *'
+
+# Port forward to the first istio-ingressgateway pod
+alias igpf='kubectl -n istio-system port-forward $(kubectl -n istio-system get pods -listio=ingressgateway -o=jsonpath="{.items[0].metadata.name}") 15000'
+
+# Get the http routes from the port-forwarded ingressgateway pod (requires jq)
+alias iroutes='curl --silent http://localhost:15000/config_dump | jq '\''.configs.routes.dynamic_route_configs[].route_config.virtual_hosts[]|{name: .name, domains: .domains, route: .routes[].match.prefix}'\'''
+
+# Get the logs of the first istio-ingressgateway pod
+# Shows what happens with incoming requests and possible errors
+alias igl='kubectl -n istio-system logs $(kubectl -n istio-system get pods -listio=ingressgateway -o=jsonpath="{.items[0].metadata.name}") --tail=300'
+
+# Get the logs of the first istio-pilot pod
+# Shows issues with configurations or connecting to the Envoy proxies
+alias ipl='kubectl -n istio-system logs $(kubectl -n istio-system get pods -listio=pilot -o=jsonpath="{.items[0].metadata.name}") discovery --tail=300'
 
 # google translate
+
 alias tv="trans -t=vi"
 alias vt="trans -f=vi -t=en"
-
-# virtual box manager
-alias vm="VBoxManage"
-
-# open sublime text
-alias subl="open -a Sublime\ Text"
-
-# run medis
-alias medis="cd /Users/tuevo/Projects/tools/medis && npm run electron electron"
-alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
-
-# Kubectl
-alias ks='kubectl config set-context --current --namespace $1'
-alias kk='kubectl config use-context $1'
